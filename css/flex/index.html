@@ -1,0 +1,64 @@
+<style>
+#container {
+    width: 500px;
+    height: 500px;
+    outline: 2px dashed lightsalmon;
+    display: flex;
+    position: relative;
+}
+.item {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    outline: 1px solid lightseagreen;
+    text-align: center;
+}
+.absolute {
+    position: absolute;
+}
+.wrap {
+    flex-wrap: wrap;
+}
+.flex {
+    flex: 1;
+}
+.cls2 {
+    width: 200px;
+    height: 50px;
+}
+.cls {
+    width: 150px;
+    height: 150px;
+}
+</style>
+<div id="container">
+</div>
+<script src="./flexible-animation.js"></script>
+<script>
+    let container = document.getElementById('container');
+    let containerWidth = container.getClientRects()[0].width;
+
+    async function handler(str = 'wrap') {
+        let text = '';
+        switch(str){
+            case 'nowrap':
+                text = `<h2>1. flex item 都有 width，nowrap</h2>`;
+                break;
+            
+            case 'wrap':
+                text = `<h2>2. flex item 都有 width，wrap</h2>`;
+                break;
+
+            case 'flex':
+                text = `<h2>3. 存在 flex item 无 width, wrap</h2>`;
+                break;
+
+        }
+        let flexLines = [];
+        let flexLine = [];
+        container.innerHTML = text;
+        await sleep(1800);
+        container.innerHTML = ``;
+        createFlexItem(containerWidth, flexLines, flexLine, str);
+    }
+</script>
