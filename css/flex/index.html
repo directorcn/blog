@@ -1,4 +1,60 @@
 <style>
+.wrapper {
+    width: 500px;
+    height: 500px;
+    position: relative;
+}
+.crossAxis {
+    position: absolute;
+    width: 8px;
+    height: 660px;
+    background-color: rgba(184, 20, 20, .3);
+    color: rgba(184, 20, 20, .3);
+    top: 0;
+    left: 50%;
+    transform: translateX(0, 50%);
+    z-index: 10;
+}
+.mainAxis {
+    position: absolute;
+    width: 660px;
+    height: 8px;
+    background-color: rgba(184, 20, 20, .3);
+    color: rgba(184, 20, 20, .3);
+    top: 50%;
+    left: 0;
+    transform: translateX(50%, 0);
+    z-index: 10;
+}
+.text {
+    width: 120px;
+    height: 30px;
+    font-size: 22px;
+    position: absolute;
+}
+.mainAxis > .text {
+    top: -30px;
+    right: 0;
+}
+.crossAxis > .text {
+    bottom: 50px;
+    right: -80px;
+    transform: rotate(90deg);
+}
+.arrow {
+    font-size: 30px;
+    font-weight: 600;
+    position: absolute;
+}
+.mainAxis > .arrow{
+    top: -18px;
+    right: -16px;
+}
+.crossAxis > .arrow {
+    bottom: -25px;
+    right: -10.5px;
+    transform: rotate(90deg);
+}
 #container {
     width: 500px;
     height: 500px;
@@ -31,14 +87,23 @@
     height: 150px;
 }
 </style>
-<div id="container">
+<div class="wrapper">
+    <div class="mainAxis">
+        <div class="arrow">&gt;</div>
+        <div class="text">Main Axis</div>
+    </div>
+    <div class="crossAxis">
+        <div class="arrow">&gt;</div>
+        <div class="text">Cross Axis</div>
+    </div>
+    <div id="container"></div>
 </div>
 <script src="./flexible-animation.js"></script>
 <script>
     let container = document.getElementById('container');
     let containerWidth = container.getClientRects()[0].width;
 
-    async function handler(str = 'wrap') {
+    async function handler(str = 'nowrap') {
         let text = '';
         switch(str){
             case 'nowrap':
@@ -57,7 +122,7 @@
         let flexLines = [];
         let flexLine = [];
         container.innerHTML = text;
-        await sleep(1800);
+        await sleep(1000);
         container.innerHTML = ``;
         createFlexItem(containerWidth, flexLines, flexLine, str);
     }

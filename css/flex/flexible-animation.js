@@ -25,7 +25,7 @@ async function createFlexItem(containerWidth, flexLines, flexLine, str) {
         }
         div.classList.add('item');
 
-        await sleep(1500);
+        await sleep(1200);
         container.appendChild(div);
         if (str === 'flex')
             i % 3 ? null : div.classList.add('flex');
@@ -49,7 +49,7 @@ async function createFlexItem(containerWidth, flexLines, flexLine, str) {
             flexLine.push({ width: div.classList.value.includes('flex') ? 0 : width });
 
             if (currentMainSize >= containerWidth) {
-                await sleep(1500);
+                await sleep(1200);
                 for (let div of container.children) {
                     div.classList.remove('absolute');
                     div.style.top = 'auto';
@@ -99,7 +99,7 @@ async function createFlexItem(containerWidth, flexLines, flexLine, str) {
                     div.innerText = 'crossSpace\nchange';
                     div.style.color = 'white';
                     div.classList.remove('absolute');
-                }    
+                }
             }
         } else if (str === 'flex') {
             
