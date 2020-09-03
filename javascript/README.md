@@ -59,3 +59,47 @@ arr.forEach(v => {
 });
 ```
 
+
+
+## 为什么 Promise 比 setTimeout 先执行
+
+`setTimeout` 是浏览器（宿主环境）的 `API`，它产生宏任务，而 `promise` 产生的是 `JavaScript` 引擎内部的微任务；每一个宏任务都有一个微任务队列，当前宏任务执行完成后，判断微任务队列有木有等待的微任务，若有，依次执行微任务，若无，执行下一个宏任务**。**
+
+```js
+async function foo() {
+    console.log('0');
+    await new Promise(resolve => resolve());
+    console.log('1');
+}
+
+new Promise(resolve => { console.log('0'); resolve()})
+    .then(() => console.log('3'));
+
+setTimeout(() => {
+    console.log('4');
+    new Promise(resolve => resolve())
+        .then(() => console.log('5'));
+}, 0);
+console.log('6');
+console.log('7');
+foo();
+```
+
+<div><pre>  宏任务 <u>setTimeout、setInterval、Event 等都产生宏任务</u>
+   2，6，7，0    # 第一个宏任务的同步代码
+    微任务 <u>Promise、MutationObserver 产生微任务</u>
+     3，1       # 第一个宏任务的异步代码
+  >>>
+  宏任务
+   4           # 第二个宏任务的同步代码
+    微任务
+     5         # 第二个宏任务的异步代码</pre></div>
+
+**在一个宏任务中，分别创建一个宏任务和微任务，微任务永远是先于宏任务执行的。**
+
+*番外：*
+
+[EventLoop]()
+
+同步异步都是相对来说的，在一个异步任务里也会有同步代码，所以在区分同步异步前，应该先找好*参考系*。
+
