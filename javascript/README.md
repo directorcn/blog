@@ -85,10 +85,10 @@ console.log('7');
 foo();
 ```
 
-<div><pre>  宏任务 <u>setTimeout、setInterval、Event 等都产生宏任务</u>
-   2，6，7，0    # 第一个宏任务的同步代码
-    微任务 <u>Promise、MutationObserver 产生微任务</u>
-     3，1       # 第一个宏任务的异步代码
+<div><pre>  宏任务 <b>setTimeout、setInterval、Event 等都产生宏任务</b>
+   2,6,7,0    # 第一个宏任务的同步代码
+    微任务 <b>Promise、MutationObserver 产生微任务</b>
+     3,1       # 第一个宏任务的异步代码
   >>>
   宏任务
    4           # 第二个宏任务的同步代码
